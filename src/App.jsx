@@ -8,11 +8,13 @@ function App() {
   const [message, setMessage] = useState("");
   const [enc, setEnc] = useState("");
   const [password, setPassword] = useState("testPassword");
-
-  const [count, setCount] = useState(0);
-
+  const [dec, setDec] = useState(null);
+  const decryptMessage = () => {
+    const decrypted = CryptoJS.AES.decrypt(enc, password);
+    setDec(decrypted);
+  };
   const encryptMessage = () => {
-    const encrypted = CryptoJS.AES.encrypt(message, password).toString();
+    const encrypted = CryptoJS.AES.encrypt(message, password);
 
     setEnc(encrypted);
   };
@@ -21,6 +23,10 @@ function App() {
     e.preventDefault();
 
     encryptMessage();
+  };
+
+  const handleDecrypt = () => {
+    decryptMessage();
   };
 
   return (
@@ -45,7 +51,9 @@ function App() {
         <button>Encrypt</button>
       </form>
 
-      <p>{enc}</p>
+      <p>{enc.toString()}</p>
+      <button onClick={handleDecrypt}>Decrypt</button>
+      {dec && <p>{dec.toString(CryptoJS.enc.Utf8)}</p>}
     </div>
   );
 }
