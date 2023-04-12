@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 
 function App() {
   const [message, setMessage] = useState("");
-  const [enc, setEnc] = useState("");
+  const [enc, setEnc] = useState(null);
   const [password, setPassword] = useState("testPassword");
   const [dec, setDec] = useState(null);
   const decryptMessage = () => {
@@ -50,9 +50,13 @@ function App() {
         </label>
         <button>Encrypt</button>
       </form>
+      {enc && (
+        <>
+          <p>{enc.toString()}</p>
 
-      <p>{enc.toString()}</p>
-      <button onClick={handleDecrypt}>Decrypt</button>
+          <button onClick={handleDecrypt}>Decrypt</button>
+        </>
+      )}
       {dec && <p>{dec.toString(CryptoJS.enc.Utf8)}</p>}
     </div>
   );
